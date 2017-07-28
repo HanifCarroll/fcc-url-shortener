@@ -6,9 +6,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 mongoose.Promise = global.Promise; 
-//mongoose.connect('mongodb://localhost/url_shortener', {
-//	useMongoClient: true
-//});
+mongoose.connect('mongodb://localhost/url_shortener', {
+	useMongoClient: true
+});
 app.use(express.static('public'));
 
 // MONGOOSE CONFIG
@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/new/:url', async (req, res) => {
+app.get('/new/:url*', async (req, res) => {
 	const fullUrl = req.originalUrl.replace('/new/', '');
 
 	// Check to see if url is valid
@@ -87,9 +87,3 @@ app.get('/:url', async (req, res) => {
 });
 
 app.listen(port, () => console.log('Server started'));
-
-// User inputs URL *
-// Generate random, short string from URL *
-// Save short URL and long URL under same document in database *
-// Display short URL and long URL to user *
-// When someone goes to the short URL from app, redirect to long URL *

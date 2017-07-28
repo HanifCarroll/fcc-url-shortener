@@ -5,8 +5,36 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>URL Shortener</title>
+	<link href="https://fonts.googleapis.com/css?family=Anonymous+Pro" rel="stylesheet">
+	<link rel="stylesheet" href="../app.css">
+	
 </head>
 <body>
-	Hi
+	<div class="container">
+		<h1>URL Shortener Microservice</h1>
+		<p>This app will convert a long URL to something a bit more manageable.</p>	
+
+		<h4>How to use: </h4>
+		<p>Simply add <span class="ex">/new/</span> to the end of this link, followed by 
+		the complete URL (http/https included!), then press enter!</p>
+
+		<h4>Example input: </h4>
+		<span id="left" class="ex">https://hmcshort.herokuapp.com/new/https://www.google.com</span>
+		<br>
+		<br>
+		<h4>Example output:</h4>
+		<span class="ex">
+			{
+"Original URL": "https://www.google.com",<br>
+"Shortened URL": "https://hmcshort.herokuapp.com/BJbT3fdLb"
+}</span>
+		<br>
+		<br>
+
+		<h4>Voila!</h4>
+		<p>You now have a shortened URL for your personal use!  
+			Visiting <span class="ex">https://hmcshort.herokuapp.com/BJbT3fdLb</span> 
+			will redirect you to <span class="ex">https://www.google.com"</span>!</p>
+	</div>
 </body>
 </html>
