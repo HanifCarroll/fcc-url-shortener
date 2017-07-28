@@ -51,7 +51,7 @@ app.get('/new/:url*', async (req, res) => {
 	// If the site doesn't exist, then create an entry
 	const newSite = {
 		long: fullUrl,
-		short: `https://afternoon-tor-86659.herokuapp.com/${shortid.generate()}`
+		short: `${req.headers.host}/${shortid.generate()}`
 	};
 
 	Site.create(newSite, (err, res) => {
@@ -70,14 +70,19 @@ app.get('/new/:url*', async (req, res) => {
 });
 
 app.get('/:url', async (req, res) => {
-	const site = await Site.findOne({ 'short': req.params.url }, (err, res) => {
+	// Lookup the short URL in the database
+	const site = await Site.findOne({ 'short': `${req.headers.host}/${req.params.url}` }, (err, res) => {
 		if (err) {
 			console.log(err);
 		} else {
 			console.log(res);
 		}
 	});
-	res.redirect(site.long);
+	if (site) {
+		res.redirect(site.long);
+	} else {
+		res.send({ 'error': 'That ID is not in the database.'});
+	}
 	
 });
 
@@ -86,5 +91,5 @@ app.listen(port, () => console.log('Server started'));
 // User inputs URL *
 // Generate random, short string from URL *
 // Save short URL and long URL under same document in database *
-// Display short URL and long URL to user 
+// Display short URL and long URL to user *
 // When someone goes to the short URL from app, redirect to long URL *
