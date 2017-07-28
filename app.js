@@ -7,12 +7,13 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 
+// Mongoose Config
 mongoose.Promise = global.Promise; 
-mongoose.connect('mongodb://localhost/url_shortener', {
+const dbUrl = process.env.MONGOLAB_URI;
+mongoose.connect(dbUrl, {
 	useMongoClient: true
 });
 
-// Mongoose Config
 const siteSchema = new mongoose.Schema({
 	long: {
 		type: String,
@@ -27,10 +28,13 @@ const siteSchema = new mongoose.Schema({
 const Site = mongoose.model('Site', siteSchema);
 
 // Routes
+
+// Homepage
 app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/public/index.html');
 });
 
+// New shortcut creation
 app.get('/new/:url*', async (req, res) => {
 	const fullUrl = req.originalUrl.replace('/new/', '');
 
@@ -71,6 +75,7 @@ app.get('/new/:url*', async (req, res) => {
 	});
 });
 
+// Redirect route
 app.get('/:url', async (req, res) => {
 	// Lookup the short URL in the database
 	const site = await Site.findOne({ 'short': `${req.headers.host}/${req.params.url}` }, (err, res) => {
