@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/new/:url*', async function (req, res) {
+app.get('/new/:url*', async (req, res) => {
 	const fullUrl = req.originalUrl.replace('/new/', '');
 
 	// Check to see if url is valid
