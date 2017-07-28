@@ -6,9 +6,9 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 mongoose.Promise = global.Promise; 
-mongoose.connect('mongodb://localhost/url_shortener', {
-	useMongoClient: true
-});
+//mongoose.connect('mongodb://localhost/url_shortener', {
+//	useMongoClient: true
+//});
 app.use(express.static('public'));
 
 // MONGOOSE CONFIG
