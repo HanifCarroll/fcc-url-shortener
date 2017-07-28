@@ -5,13 +5,14 @@ const shortid = require('shortid');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.static('public'));
+
 mongoose.Promise = global.Promise; 
 mongoose.connect('mongodb://localhost/url_shortener', {
 	useMongoClient: true
 });
-app.use(express.static('public'));
 
-// MONGOOSE CONFIG
+// Mongoose Config
 const siteSchema = new mongoose.Schema({
 	long: {
 		type: String,
@@ -25,6 +26,7 @@ const siteSchema = new mongoose.Schema({
 
 const Site = mongoose.model('Site', siteSchema);
 
+// Routes
 app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/public/index.html');
 });
